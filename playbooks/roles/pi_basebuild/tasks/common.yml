@@ -1,0 +1,29 @@
+---
+- name: create raemone group
+  group:
+    name: raemone
+    gid: 501
+
+- name: create raemone user
+  user:
+    name: raemone
+    comment: "Developer ID - raemone"
+    group: raemone
+    uid: 501
+    shell: /bin/bash
+
+- name: setup authorized_keys
+  authorized_key:
+    user: raemone
+    state: present
+    key: "{{ lookup('file', 'raemone_ssh_keys')}}"
+
+- name: update /etc/hosts
+  blockinfile:
+    dest: /etc/hosts
+    block: "{{ lookup('template', 'hosts.j2') }}"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK"
+
+- name: Set timezone to SGT
+  timezone: 
+    name: Asia/Singapore

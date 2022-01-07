@@ -1,0 +1,6 @@
+---
+# handlers file for stdBuild
+- name: netplan apply
+  command: netplan apply
+  async: 20
+  poll: 0

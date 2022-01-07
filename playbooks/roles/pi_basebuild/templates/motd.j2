@@ -1,0 +1,11 @@
+
+******************************************************
+*           For authorized access only               *
+*                                                    *
+******************************************************
+hostname: {{ ansible_nodename }}
+os version: {{ ansible_distribution }} {{ ansible_distribution_major_version }}
+kernel version: {{ ansible_kernel }}
+memory: {{ ansible_memtotal_mb }}MB
+cpu count: {{ ansible_processor_count }}
+
