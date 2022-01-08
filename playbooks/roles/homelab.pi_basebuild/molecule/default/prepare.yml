@@ -1,0 +1,28 @@
+---
+- name: Prepare
+  hosts: all
+  tasks:
+    - name: create /etc/docker/daemon.json file
+      file:
+        path: /etc/docker/daemon.json 
+        state: touch
+        mode: '0644'
+        owner: root
+        group: root
+    
+    - name: create /boot/firmware/cmdline.txt file
+      file:
+        path: /boot/firmware/cmdline.txt
+        state: touch
+        mode: '0644'
+        owner: root
+        group: root
+    
+    - name: create a line entry in /boot/firmware/cmdline.txt file
+      lineinfile:
+        path: /boot/firmware/cmdline.txt
+        line: 'test entry'
+        mode: '0644'
+        owner: root
+        group: root
+
