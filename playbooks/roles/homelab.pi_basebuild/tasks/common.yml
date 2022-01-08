@@ -16,13 +16,7 @@
   authorized_key:
     user: raemone
     state: present
-    key: "{{ lookup('file', 'raemone_ssh_keys')}}"
-
-- name: update /etc/hosts
-  blockinfile:
-    dest: /etc/hosts
-    block: "{{ lookup('template', 'hosts.j2') }}"
-    marker: "# {mark} ANSIBLE MANAGED BLOCK"
+    key: "{{ lookup('file', 'raemone_ssh_keys') }}"
 
 - name: Set timezone to SGT
   timezone: 

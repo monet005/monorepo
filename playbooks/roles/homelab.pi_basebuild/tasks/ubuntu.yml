@@ -1,0 +1,38 @@
+---
+- name: create custom sudo
+  template:
+    src: sudo.j2
+    dest: /etc/sudoers.d/home-admin-users
+    mode: '0440'
+    owner: root
+    group: root
+
+- name: install base packages
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop:
+    - net-tools
+    - docker.io
+    - nfs-common
+    - unzip
+
+- name: add raemone user to docker group
+  user:
+    name: raemone
+    groups: docker
+    append: yes
+
+- name: set cgroups docker driver
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: enable cgroups limit support
+  command: >-
+    sed -i '$ s/$/ cgroup_enable=cpuset cgroup_enable=memory 
+    cgroup_memory=1 swapaccount=1/' /boot/firmware/cmdline.txt

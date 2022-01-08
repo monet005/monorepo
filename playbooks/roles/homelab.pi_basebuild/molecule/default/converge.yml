@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include homelab.pi_basebuild"
+      include_role:
+        name: "homelab.pi_basebuild"
