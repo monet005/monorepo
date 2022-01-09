@@ -4,7 +4,7 @@
   tasks:
     - name: create directories
       file:
-        path: "{{ dirname }}"
+        path: "{{ item }}"
         state: directory
         mode: '0755'
         owner: root
@@ -12,7 +12,7 @@
       loop:
         - /etc/docker
         - /boot/firmware
-        
+
     - name: create /etc/docker/daemon.json file
       file:
         path: /etc/docker/daemon.json 
