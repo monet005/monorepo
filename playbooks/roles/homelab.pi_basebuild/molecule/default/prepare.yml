@@ -2,6 +2,17 @@
 - name: Prepare
   hosts: all
   tasks:
+    - name: create directories
+      file:
+        path: "{{ dirname }}"
+        state: directory
+        mode: '0755'
+        owner: root
+        group: root
+      loop:
+        - /etc/docker
+        - /boot/firmware
+        
     - name: create /etc/docker/daemon.json file
       file:
         path: /etc/docker/daemon.json 
