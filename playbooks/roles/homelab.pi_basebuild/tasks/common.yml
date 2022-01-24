@@ -18,6 +18,25 @@
     state: present
     key: "{{ lookup('file', 'raemone_ssh_keys') }}"
 
+- name: create monet group
+  group:
+    name: monet
+    gid: 2000
+
+- name: create monet user
+  user:
+    name: monet
+    comment: "Developer ID - monet"
+    group: monet
+    uid: 2000
+    shell: /bin/bash
+
+- name: setup authorized_keys
+  authorized_key:
+    user: monet
+    state: present
+    key: "{{ lookup('file', 'monet_ssh_keys') }}"
+
 - name: Set timezone to SGT
   timezone: 
     name: Asia/Singapore

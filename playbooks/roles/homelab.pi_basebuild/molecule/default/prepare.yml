@@ -1,23 +1,13 @@
 ---
 - name: Prepare
   hosts: all
+  become: yes
   tasks:
     - name: create directories
       file:
-        path: "{{ item }}"
+        path: /boot/firmware
         state: directory
         mode: '0755'
-        owner: root
-        group: root
-      loop:
-        - /etc/docker
-        - /boot/firmware
-
-    - name: create /etc/docker/daemon.json file
-      file:
-        path: /etc/docker/daemon.json 
-        state: touch
-        mode: '0644'
         owner: root
         group: root
     
@@ -36,4 +26,3 @@
         mode: '0644'
         owner: root
         group: root
-
