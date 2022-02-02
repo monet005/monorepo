@@ -1,3 +1,7 @@
 cloud_learning
 repos
 .DS_Store
+vagrant
+local
+files/*_keys
+inventory

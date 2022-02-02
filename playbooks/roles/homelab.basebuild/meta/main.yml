@@ -2,7 +2,7 @@ galaxy_info:
   author: Ramon
   description: RPI OS Customization
   company: homelab
-  role_name: pi_basebuild
+  role_name: basebuild
   namespace: homelab
   license: MIT
   min_ansible_version: 2.1
