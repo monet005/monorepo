@@ -5,3 +5,4 @@ vagrant
 local
 files/*_keys
 inventory
+.gitignore
