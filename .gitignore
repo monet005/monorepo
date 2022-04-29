@@ -7,3 +7,4 @@ files/*_keys
 inventory
 cached_facts
 external_repos
+firefly

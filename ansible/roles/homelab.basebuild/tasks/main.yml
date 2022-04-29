@@ -1,0 +1,7 @@
+---
+# tasks file for homelab.basebuild
+- include_tasks: common.yml
+
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+  
