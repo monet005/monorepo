@@ -1,9 +1,0 @@
----
-- name: Converge
-  hosts: all
-  become: yes
-  
-  tasks:
-    - name: "Include homelab.basebuild"
-      include_role:
-        name: "homelab.basebuild"

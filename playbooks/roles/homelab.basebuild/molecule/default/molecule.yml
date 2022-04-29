@@ -1,9 +1,0 @@
----
-driver:
-  name: vagrant
-platforms:
-  - name: ubuntu-instance
-    box: generic/ubuntu2004
-
-  - name: centos8-instance
-    box: generic/centos8
