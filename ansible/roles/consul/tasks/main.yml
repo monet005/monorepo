@@ -1,0 +1,98 @@
+---
+# tasks file for consul
+- name: Install pre-requisite packages
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+    state: present
+  loop:
+    - unzip
+
+- name: Copy consul binary to /usr/bin
+  unarchive: 
+    src: "{{ (ansible_architecture == 'aarch64') | ternary(installer_arm_src, installer_x86_src) }}"
+    dest: /usr/bin
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Run consul autocomplete installation
+  command: consul -autocomplete-install
+  ignore_errors: true
+
+- name: Create consul user
+  user:
+    name: "{{ consul_user }}"
+    system: yes
+    shell: /bin/false
+    home: /etc/consul.d
+
+- name: Create /etc/consul.d directory if not exists
+  file:
+    state: directory
+    path: /etc/consul.d
+    owner: consul
+    group: consul
+    mode: '0755'
+
+- name: Create /opt/consul directory if not exists
+  file:
+    state: directory
+    path: /opt/consul
+    owner: consul
+    group: consul
+    mode: '0755'
+
+- name: Copy CA files
+  copy:
+    src: "{{ item }}"
+    dest: /etc/consul.d
+    owner: consul
+    group: consul
+    mode: '0644'
+  loop:
+    - "certs/{{ ansible_nodename }}/"
+    - certs/consul-agent-ca.pem
+
+- name: Define /etc/consul.d/consul.hcl for agent
+  template:
+    src: consul_agent.hcl.j2
+    dest: /etc/consul.d/consul.hcl
+    owner: consul
+    group: consul
+    mode: '0644'
+  when: role == 'agent'
+
+- name: Define /etc/consul.d/consul.hcl for server
+  template:
+    src: consul_server.hcl.j2
+    dest: /etc/consul.d/consul.hcl
+    owner: consul
+    group: consul
+    mode: '0644'
+  when: role == 'server'
+
+- name: Define /etc/consul.d/server.hcl
+  template:
+    src: server.hcl.j2
+    dest: /etc/consul.d/server.hcl
+    owner: consul
+    group: consul
+    mode: '0644'
+  when: role == 'server'
+
+- name: Create consul systemd service
+  template:
+    src: consul.service.j2
+    dest: /usr/lib/systemd/system/consul.service
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Start and enable consul systemd service
+  systemd:
+    name: consul.service
+    state: started
+    enabled: yes
+    daemon_reload: yes
+

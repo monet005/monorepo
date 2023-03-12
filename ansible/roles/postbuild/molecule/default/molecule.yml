@@ -1,0 +1,6 @@
+---
+driver:
+  name: vagrant
+platforms:
+  - name: ubuntu-instance
+    box: generic/ubuntu2204

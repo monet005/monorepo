@@ -1,0 +1,6 @@
+---
+# defaults file for consul
+consul_version: 1.12.0
+consul_user: consul
+installer_arm_src: "consul_{{ consul_version }}_linux_arm64.zip"
+installer_x86_src: "consul_{{ consul_version }}_linux_amd64.zip"

@@ -1,0 +1,16 @@
+- hosts: 192.168.0.183
+  become: yes
+
+  tasks:
+    - name: run pi-0 jumphost customizations
+      include_role:
+        name: ansible-role-docker
+
+    - name: install base packages
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      loop:
+        - nfs-kernel-server
+

@@ -1,7 +1,0 @@
-- hosts: all
-  become: yes
-
-  tasks:
-    - name: run basebuild
-      include_role:
-        name: homelab.basebuild

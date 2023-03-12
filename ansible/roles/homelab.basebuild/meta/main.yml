@@ -10,6 +10,7 @@ galaxy_info:
    - name: Ubuntu
      versions:
      - focal
+     - jammy
    - name: centos
      versions:
      - 7

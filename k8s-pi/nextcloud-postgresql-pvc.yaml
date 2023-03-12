@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"name":"nextcloud-postgresql-pvc","namespace":"default"},"spec":{"accessModes":["ReadWriteMany"],"resources":{"requests":{"storage":"5Gi"}},"selector":{"matchLabels":{"app":"nextcloud-postgresql"}}}}
+    pv.kubernetes.io/bind-completed: "yes"
+    pv.kubernetes.io/bound-by-controller: "yes"
+  creationTimestamp: "2021-11-30T12:51:45Z"
+  finalizers:
+  - kubernetes.io/pvc-protection
+  name: nextcloud-postgresql-pvc
+  namespace: default
+  resourceVersion: "28386692"
+  uid: 4e237cd5-60b3-4aed-844e-8f8e6bdfc36b
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+  selector:
+    matchLabels:
+      app: nextcloud-postgresql
+  volumeMode: Filesystem
+  volumeName: nextcloud-postgresql-pv
+status:
+  accessModes:
+  - ReadWriteMany
+  capacity:
+    storage: 5Gi
+  phase: Bound

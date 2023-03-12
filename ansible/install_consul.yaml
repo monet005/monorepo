@@ -1,0 +1,8 @@
+- hosts: all
+  become: yes
+  
+  tasks:
+    - name: Install Consul
+      include_role:
+        name: consul
+      tags: consul

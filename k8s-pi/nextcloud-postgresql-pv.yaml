@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"PersistentVolume","metadata":{"annotations":{},"labels":{"app":"nextcloud-postgresql"},"name":"nextcloud-postgresql-pv"},"spec":{"accessModes":["ReadWriteMany"],"capacity":{"storage":"5Gi"},"nfs":{"path":"/shared","server":"192.168.0.200"},"persistentVolumeReclaimPolicy":"Retain"}}
+    pv.kubernetes.io/bound-by-controller: "yes"
+  creationTimestamp: "2021-11-30T12:51:45Z"
+  finalizers:
+  - kubernetes.io/pv-protection
+  labels:
+    app: nextcloud-postgresql
+  name: nextcloud-postgresql-pv
+  resourceVersion: "28386689"
+  uid: e9cc6e2b-6066-4a04-936c-524fbb4aad6d
+spec:
+  accessModes:
+  - ReadWriteMany
+  capacity:
+    storage: 5Gi
+  claimRef:
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    name: nextcloud-postgresql-pvc
+    namespace: default
+    resourceVersion: "28386687"
+    uid: 4e237cd5-60b3-4aed-844e-8f8e6bdfc36b
+  nfs:
+    path: /shared
+    server: 192.168.0.200
+  persistentVolumeReclaimPolicy: Retain
+  volumeMode: Filesystem
+status:
+  phase: Bound

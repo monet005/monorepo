@@ -1,41 +1,41 @@
 ---
-- name: create raemone group
+- name: create infra group
   group:
-    name: raemone
-    gid: 501
+    name: infra
+    gid: 5000
 
-- name: create raemone user
+- name: create infra user
   user:
-    name: raemone
-    comment: "Developer ID - raemone"
-    group: raemone
-    uid: 501
+    name: infra1
+    comment: "Infra user ID"
+    group: infra
+    uid: 5001
     shell: /bin/bash
 
-- name: setup authorized_keys
+- name: setup authorized_keys for infra1 user
   authorized_key:
-    user: raemone
+    user: infra1
     state: present
-    key: "{{ lookup('file', 'raemone_ssh_keys') }}"
+    key: "{{ lookup('file', 'id_rsa.infra1.pub') }}"
 
 - name: create monet group
   group:
     name: monet
-    gid: 2000
+    gid: 8000
 
 - name: create monet user
   user:
     name: monet
     comment: "Developer ID - monet"
     group: monet
-    uid: 2000
+    uid: 8001
     shell: /bin/bash
 
-- name: setup authorized_keys
+- name: setup authorized_keys for monet user
   authorized_key:
     user: monet
     state: present
-    key: "{{ lookup('file', 'monet_ssh_keys') }}"
+    key: "{{ lookup('file', 'id_rsa.monet.pub') }}"
 
 - debug: msg="{{ ansible_date_time.tz }}"
 
