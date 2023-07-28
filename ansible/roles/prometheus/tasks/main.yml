@@ -1,2 +1,95 @@
 ---
 # tasks file for prometheus
+- name: Create prometheus user account
+  user:
+    name: prometheus
+    shell: /bin/false
+    create_home: no
+    state: present
+
+- name: Create prometheus directories
+  file:
+    path: "{{ item }}"
+    owner: prometheus
+    group: prometheus
+    mode: '0755'
+    state: directory
+  loop:
+    - /etc/prometheus
+    - /var/lib/prometheus
+
+- name: Download prometheus installer package for arm64
+  get_url:
+    url: "https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version }}/prometheus-{{ prometheus_version }}.linux-arm64.tar.gz"
+    dest: /tmp
+  when: ansible_architecture == 'aarch64'
+
+- name: Download prometheus installer package for x86_64
+  get_url:
+    url: "https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version }}/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz"
+    dest: /tmp
+  when: ansible_architecture == 'x86_64'
+
+- name: Extract the installer package
+  unarchive:
+    src: "{{ (ansible_architecture == 'aarch64') | ternary(installer_arm_src, installer_x86_src) }}.tar.gz"
+    remote_src: yes
+    dest: /tmp
+    
+- name: Copy prometheus binaries
+  copy:
+    src: "{{ (ansible_architecture == 'aarch64') | ternary(installer_arm_src, installer_x86_src) }}/{{ item }}"
+    dest: /usr/local/bin
+    owner: prometheus
+    group: prometheus
+    mode: '0755'
+    remote_src: yes
+  loop:
+    - prometheus
+    - promtool
+
+- name: Copy prometheus console binaries
+  copy:
+    src: "{{ (ansible_architecture == 'aarch64') | ternary(installer_arm_src, installer_x86_src) }}/{{ item }}"
+    dest: /etc/prometheus
+    owner: prometheus
+    group: prometheus
+    mode: '0755'
+    remote_src: yes
+  loop:
+    - consoles
+    - console_libraries
+
+- name: Create prometheus systemd service
+  template:
+    src: prometheus.service.j2
+    dest: /etc/systemd/system/prometheus.service
+    owner: root
+    group: root
+    mode: '0755'
+  notify: restart prometheus
+
+- name: Start and enable prometheus systemd service
+  systemd:
+    name: prometheus.service
+    state: started
+    enabled: yes
+    daemon_reload: yes
+
+- name: Create prometheus configuration file
+  template:
+    src: prometheus.yml.j2
+    dest: /etc/prometheus/prometheus.yml
+    owner: prometheus
+    group: prometheus
+    mode: '0644'
+  notify: restart prometheus
+  
+- name: Set server rules
+  template:
+    src: server_rules.yml.j2
+    dest: /etc/prometheus/server_rules.yml
+    owner: prometheus
+    group: prometheus
+    mode: '0644'
+  notify: restart prometheus

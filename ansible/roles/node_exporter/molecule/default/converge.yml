@@ -3,6 +3,6 @@
   hosts: all
   become: yes
   tasks:
-    - name: "Include homelab.prometheus"
+    - name: "Include homelab.node_exporter"
       ansible.builtin.include_role:
-        name: "homelab.prometheus"
+        name: "homelab.node_exporter"

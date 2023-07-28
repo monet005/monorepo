@@ -1,0 +1,21 @@
+{
+    "service": {
+        "name": "prometheus",
+        "tags": [
+            "prometheus"
+        ],
+        "checks": [
+            {
+                "interval": "120s",
+                "http": "http://{{ ansible_nodename }}:9090/graph",
+                "name": "prometheus health",
+                "timeout": "30s"
+            }
+        ],
+        "meta": {
+            "http_monitor_url": "http://{{ ansible_nodename }}:9090/graph"
+        },
+        "id": "prometheus",
+        "port": 9090
+    }
+}

@@ -57,3 +57,13 @@
     mode: '0440'
     owner: root
     group: root
+
+- name: fix infra1 homedir ownership for lxc guests
+  file:
+    path: /home/infra1
+    owner: infra1
+    group: infra
+    state: directory
+    recurse: true
+  when: ansible_virtualization_type == 'lxc'
+

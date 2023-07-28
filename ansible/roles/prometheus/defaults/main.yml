@@ -1,2 +1,6 @@
 ---
 # defaults file for prometheus
+prometheus_version: 2.37.6
+tempdir: /tmp
+installer_arm_src: "{{ tempdir }}/prometheus-{{ prometheus_version }}.linux-arm64"
+installer_x86_src: "{{ tempdir }}/prometheus-{{ prometheus_version }}.linux-amd64"

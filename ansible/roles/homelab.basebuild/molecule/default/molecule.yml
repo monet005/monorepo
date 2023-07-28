@@ -5,8 +5,11 @@ platforms:
   - name: ubuntu-instance
     box: generic/ubuntu2204
 
-      #  - name: centos8-instance
-      #box: generic/centos8
+  - name: centos8-instance
+    box: generic/centos8
 
-      #- name: centos7-instance
-      #box: generic/centos7
+  - name: centos7-instance
+    box: generic/centos7
+
+  - name: centos9s-instance
+    box: generic/centos9s

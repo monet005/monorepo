@@ -1,0 +1,6 @@
+---
+# defaults file for node_exporter
+node_exporter_version: 1.5.0
+tempdir: /tmp
+installer_arm_src: "{{ tempdir }}/node_exporter-{{ node_exporter_version}}.linux-arm64"
+installer_x86_src: "{{ tempdir }}/node_exporter-{{ node_exporter_version }}.linux-amd64"

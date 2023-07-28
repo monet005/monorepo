@@ -1,0 +1,7 @@
+- hosts: prometheus.home
+  become: yes
+
+  tasks:
+    - name: run prometheus role
+      include_role:
+        name: prometheus

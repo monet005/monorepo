@@ -1,0 +1,7 @@
+- hosts: all
+  become: yes
+
+  tasks:
+    - name: run node_exporter role
+      include_role:
+        name: node_exporter
