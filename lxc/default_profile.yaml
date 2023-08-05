@@ -1,0 +1,28 @@
+config:
+  cloud-init.user-data: |
+    #cloud-config
+    timezone: Asia/Singapore
+    package_upgrade: true
+    users:
+      - name: infra1
+        gecos: Infra user ID
+        groups: infra
+        primary_group: infra
+        uid: 5001
+        sudo: ALL=(ALL) NOPASSWD:ALL
+        shell: /bin/bash
+        lock_passwd: true
+        ssh_authorized_keys:
+          - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDPWHWO6+I5rT4jn09OF+wNIBLWHdw159lIJQbb/OASF6ajj7Ot/ySBS4O7ulXHYZ/7kIM/Rwi7qG7zgtIw86medp7N7l2NDW+lpFJ7VsIV7rPi0rKywgkSFeSrR+da6j0ippX8FcJ7misA5GI1DUqDNDXgMyBdvF3O6JlY67Ub2qFrFnoC4jkyB2FO5EY9WsZzTLrQIJlrZCSTt2rKpl04ciaevqkM8CQmejwvoWCz73UOFNvtyjKvZFn8N6bQ1swS3xyMH+6p9cNqTetoxnukehjIqhtPUO6WI2m3vmsRJPlV/uz34XFD+O4ClCh2/osEsri4OEmfKpQZ3+oY8LTvWDYoQYCY7yefj7O2P9IHQAgNdV0R2HOZo7ihwJI1AmLZHgglyGL8re+TC0+TkmUr3b05vx8s/eMoOrrInUruGKEkaRkBiP9hVU4nx6LSoNRtG3Mh9H0Ezir1J40n3FURirxXl26TVjYB4ROi9NPEYth/3Ys/G+ve7AzbAWX9yp8= monet@fedora"
+description: Bridged networking LXD profile
+devices:
+  eth0:
+    name: eth0
+    nictype: bridged
+    parent: br0
+    type: nic
+  root:
+    path: /
+    pool: local
+    type: disk
+name: bridgedprofile
