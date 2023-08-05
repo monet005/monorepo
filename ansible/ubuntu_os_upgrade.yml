@@ -3,9 +3,13 @@
   become: yes
 
   tasks:
-    - name: Show current kernel version
+    - name: Run uname command
       command: uname -a
-      
+      register: uname
+    
+    - name: Show current kernel version
+      debug: msg="{{ uname }}"
+
     - name: Update apt repo and cache on all Debian/Ubuntu boxes
       apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
 
